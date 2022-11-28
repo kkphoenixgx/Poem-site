@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b0723c62.css",
+    "main.js": "/static/js/main.6a911352.js",
+    "static/js/787.60bc7a3c.chunk.js": "/static/js/787.60bc7a3c.chunk.js",
+    "static/media/menu-icon.png": "/static/media/menu-icon.fe22ac2c781b450d8b74.png",
+    "static/media/menuColor.png": "/static/media/menuColor.443b8e21982be26a1da1.png",
+    "static/media/menuSaveIcon.png": "/static/media/menuSaveIcon.793c6ddb2f963f7dbe4b.png",
+    "static/media/user.png": "/static/media/user.780f6978b556688ace73.png",
+    "static/media/githubIcon.png": "/static/media/githubIcon.e7c25e5e9fb74813f1c2.png",
+    "static/media/emailIcon.png": "/static/media/emailIcon.d89a8da1cc014a9d3699.png",
+    "static/media/round-add-button-on.png": "/static/media/round-add-button-on.09777e7d008bc05d5a0c.png",
+    "static/media/homeIcon.png": "/static/media/homeIcon.7668a30ba04ce64464e7.png",
+    "static/media/round-add-button.png": "/static/media/round-add-button.c833229b08182c39fe9a.png",
+    "static/media/linkedInIcon.png": "/static/media/linkedInIcon.af3f0c639abd231a3d18.png",
+    "index.html": "/index.html",
+    "main.b0723c62.css.map": "/static/css/main.b0723c62.css.map",
+    "main.6a911352.js.map": "/static/js/main.6a911352.js.map",
+    "787.60bc7a3c.chunk.js.map": "/static/js/787.60bc7a3c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b0723c62.css",
+    "static/js/main.6a911352.js"
+  ]
+}

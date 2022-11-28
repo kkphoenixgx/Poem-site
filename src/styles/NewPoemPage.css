@@ -1,0 +1,62 @@
+.newPoem{
+    display: none;
+    background-color: white;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    position: absolute;
+    top: 7px;
+    z-index: 5;
+}
+.text1, .text2{
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+}
+.text1:focus, .text2:focus {
+    outline: 0;
+}
+.text1{
+    height: 10%;
+    border: none;
+    font-size: 25px;
+    transition: ease-in-out 1s;
+}
+.text2 {
+    height: 79vh;
+    max-width: 100vw;
+    min-width: 100vw;
+    resize: none;
+    font-size: 25px;
+    /* z-index: 4; */
+}
+
+.menuPoemPage{
+    height: 100vh;
+    position: absolute;
+    left: 1vw;
+    bottom: 10px;
+    transition: ease-in-out 1s;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.imgIcon{
+    width: 60px;
+    background-color: black;
+    border-radius: 144px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    left: -15vh;
+    position: relative;
+    transition: ease-in-out 0.5s;
+}
+
+.imgIcon img{
+    width: 39px;
+    height: 37px;
+}

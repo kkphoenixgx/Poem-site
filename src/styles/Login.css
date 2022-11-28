@@ -1,0 +1,54 @@
+.login{
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.loginBox{
+    height: 60vh;
+    width: 291px;
+    min-width: 219px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    background-color: dimgrey;
+    border-radius: 74px;
+}
+
+.login img {
+    width: 116px;
+}
+
+.login input {
+    border: none;
+    width: 70%;
+    height: 8%;
+    text-align: center;
+    background-color: #e8f0ec;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.login input:focus{
+    outline: 0;
+}
+.login button{
+    width: 60%;
+    height: 8%;
+    border-radius: 20px;
+    background-color: #9cccbd;
+    cursor: pointer;
+    transition: ease-in-out 0.5s;
+}
+
+body{
+    background-color: #c0d0d0;
+}
+
+/* ------------ Animations ------------ */
+
+.login button:hover{
+    background-color: #67caab;
+}

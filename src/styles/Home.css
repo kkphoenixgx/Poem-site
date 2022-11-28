@@ -1,0 +1,41 @@
+.home{
+    min-height: 90vh;
+    max-width: 100vw;
+    display: flex;
+    background-color: rgb(205, 218, 233);
+    flex-direction: column;
+    align-items: center;
+    transition: ease-in-out 3s;
+}
+
+.home ul{
+    list-style: none;
+}
+
+.home li{
+    background-color: white;
+    width: 96vw;
+    height: 20vh;
+    margin: 3vh 0 3vh 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+  .home:nth-child(3){
+    margin-top: 10vh;
+  }
+  li h2{
+    margin-left: 1%;
+  }
+  li h4{
+    text-align: end;
+    margin-right: 1%;
+  }
+
+.home img{
+    width: 65px;
+    position: fixed;
+    bottom: 5px;
+    right: 0.5%;
+    cursor: pointer;
+}
