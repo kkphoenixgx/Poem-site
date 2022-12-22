@@ -14,7 +14,9 @@ header h1{
     margin-left: 2%;
 }
 header img {
-    margin-right: 4%;
+    /* margin-right: 4%; */
     height: 31px;
     width: 42px;
+    position: absolute;
+    right: 4vw;
 }

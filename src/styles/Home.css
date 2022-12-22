@@ -1,11 +1,10 @@
 .home{
-    min-height: 90vh;
-    max-width: 100vw;
-    display: flex;
-    background-color: rgb(205, 218, 233);
-    flex-direction: column;
-    align-items: center;
-    transition: ease-in-out 3s;
+  min-height: 90vh;
+  max-width: 100vw;
+  display: flex;
+  background-color: rgb(205, 218, 233);
+  flex-direction: column;
+  align-items: center;
 }
 
 .home ul{

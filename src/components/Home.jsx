@@ -32,7 +32,7 @@ export const Home = ()=>{
                 </li>
             </ul>
 
-            <img onClick={handleButtonClick} src={ toggleButton ? roundAddButtonImage : roundAddButtonImageOn } alt="roundButton" />
+            <img id='newPoemButton' onClick={handleButtonClick} src={ toggleButton ? roundAddButtonImage : roundAddButtonImageOn } alt="roundButton" />
         </div>
     )
 }

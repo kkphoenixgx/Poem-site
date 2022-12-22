@@ -43,20 +43,44 @@
 }
 
 .imgIcon{
-    width: 60px;
     background-color: black;
-    border-radius: 144px;
+    width: 60px;
     height: 60px;
+    border-radius: 144px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    left: -15vh;
+    
     position: relative;
+    left: -15vh;
+    
+    cursor: pointer;
     transition: ease-in-out 0.5s;
 }
 
 .imgIcon img{
     width: 39px;
     height: 37px;
+}
+
+.inputColor{
+    display: none;
+    position: absolute;
+    left: 24vw;
+    width: 47vw;
+    height: 5vh;
+    border-radius: 14px;
+    text-align: center;
+}
+.btnColor{
+    display: none;
+    height: 4.2vh;
+    width: 25vw;
+    position: absolute;
+    bottom: 3px;
+    left: 72vw;
+    border-radius: 12px;
+    background-color: black;
+    color: white;
 }
