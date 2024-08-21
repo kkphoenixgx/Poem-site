@@ -1,63 +1,84 @@
 import '../styles/NewPoemPage.css'
-import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from "react";
 
 import menuPoemImage from '../assets/img/menuColor.png'
 import menuSaveIcon from '../assets/img/menuSaveIcon.png'
 import homeIcon from '../assets/img/homeIcon.png'
+import Axios from "axios"
+import { ColorPicker } from './colorPickerSketch';
 
-import { currentDB, addToFirestoreDB, ChangeCurrentRef } from '../services/fireBase/FirebaseStart';
+export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
+    
+    let textAreaRef = useRef();
+    let refTittle = useRef();
+    let menuPoemPage = useRef();
+    let newPoemPageReference = useRef();
 
-export const NewPoemPage = ()=>{
-
-    let navigate = useNavigate()
-
-    const handleStartWriting = event => {
-        let text = event.target.innerText
-        if ( text === 'Escreva seu poema') text = ''
-    }
+    let [colorPicker, setColorPicker] = useState(false);
+    let [color, setColor] = useState("#fff");
+    let [lastColor, setlastColor] = useState("#fff");
+    
+    let [lastPoem, setLastpoem] = useState({});
+    
+    // ----------- CLICK METHODS -----------
     const openColorPick = event => {
-        // event.target.
-        let colorPicker = document.querySelector('.inputColor')
-        let btnColorPicker = document.querySelector('.btnColor')
-        colorPicker.style.display = 'block'
-        btnColorPicker.style.display = 'block'
-
+        setColorPicker(!colorPicker)
     }
-    const changeColorBtn = event => {
-        let colorPicker = document.querySelector('.inputColor')
-        let btnColorPicker = document.querySelector('.btnColor')
+    const handleSaveClick = () =>{
         
-        console.log(colorPicker.value);
-        console.log(document.querySelector('.newPoem').style);
-        document.querySelector('#newPoemPage').style.background = colorPicker.value
-        document.querySelector('#textTitle').style.background = colorPicker.value
+        let text = textAreaRef.current.innerText
+        let title = refTittle.current.value
 
-        btnColorPicker.style.display = 'none'
-        colorPicker.style.display = 'none'
-    }
+        let poemObject = {
+            id: localStorage.getItem("uid"),
+            data: {
+                title: title,
+                poem: text,
+                color: color,
+                date: getFormatedDate()
+            }
+        }
+        //? ADD NEW FRESH POEM
+        if(poem == null || poemKey === ""){
+            
+            try {
 
-    const handleSaveClick = (name, data) =>{
-        const homeLis = document.querySelectorAll('.home ul li')
-        
-        if(name === '') name = `Meu poema #${homeLis[homeLis.length-1].dataset.id}`
+                Axios.post("http://localhost:3000/addPoem", poemObject)
+                    .then(response => {
+                        console.log(response);
+                        closePoemPage();
+                    })
+                    .catch( error => {
+                        console.error(error)
+                    })
 
-        ChangeCurrentRef('Users', 'Kauã Alves').then( ()=> {
+            } catch (error) {
+                console.error(error)
+            }
 
-            addToFirestoreDB( {
-                name: name,
-                data: data, currentDB,
-                id: homeLis[homeLis.length-1].dataset.id
-            } )
-        
-        } )
-        // console.log(name, data);
+            
+        }
+        //? UPDATE POEM
+        else{
+            poemObject.key = poemKey;
+
+            Axios.post("http://localhost:3000/updatePoem", poemObject)
+                .then(response => {
+                    console.log(response);
+                    closePoemPage();
+                })
+                .catch( error => {
+                    console.error(error)
+                })
+        }
+
+
     }
     const handleHomeClick = ()=>{
-        navigate('/');
-        document.querySelector('#newPoemPage').style.display = 'none';
-        document.querySelector('#newPoemButton').style.display = 'block'
+        closePoemPage();
     }
+
+    // ----------- MAIN METHODS -----------
 
     const resizeText = (target, text)=>{
         let textArray = text.split('\n')
@@ -81,13 +102,84 @@ export const NewPoemPage = ()=>{
         }
 
         else target.style.fontSize = '25px'
+    }    
+    const recoverPoemData = ()=>{
+        refTittle.current.value = poem.title
+        textAreaRef.current.innerText = poem.poem
+
+        newPoemPageReference.current.style.backgroundColor = poem.color;
+        refTittle.current.style.backgroundColor = poem.color;
+        setColor(poem.color);
+        setLastpoem(poem)
     }
+    const updateColor = ()=>{
+        newPoemPageReference.current.style.backgroundColor = color;
+        refTittle.current.style.backgroundColor = color;
+        
+        const useDarkText = shouldUseDarkText(color);
+        textAreaRef.current.style.color = useDarkText ? '#000000' : '#FFFFFF';
+        refTittle.current.style.color = useDarkText ? '#000000' : '#FFFFFF';
+
+        setlastColor(color)
+    }
+
+    // ----------- SIDE METHODS -----------
+    const hexToRgb = (hex) => {
+        // Remove the leading # if present
+        hex = hex.replace(/^#/, '');
     
+        // Convert 3-digit hex to 6-digit hex
+        if (hex.length === 3) {
+            hex = hex.split('').map(char => char + char).join('');
+        }
+    
+        // Parse the r, g, b values
+        const bigint = parseInt(hex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+    
+        return [r, g, b];
+    }
+    const getLuminance = (r, g, b) => {
+        const a = [r, g, b].map(value => {
+            value /= 255;
+            return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+        });
+    
+        return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    const shouldUseDarkText = (hex) => {
+        const [r, g, b] = hexToRgb(hex);
+        const luminance = getLuminance(r, g, b);
+        return luminance > 0.179;
+    }
+    const resizeTitle = (titleSize, fontTitleSize) => {
+        const textTittle = document.querySelector('#textTitle')
+
+        textTittle.style.height = `${titleSize}`
+        textTittle.style.fontSize = `${fontTitleSize}`
+    } 
+    const getFormatedDate = () => {
+        const today = new Date();
+
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        return (dd + '/' + mm + '/' + yyyy);
+    }   
+
     
     useEffect( ()=>{
-        const menuPoemPage = document.querySelector('#menuPoemPage')
-        const textElement = document.querySelector('#text')
-    
+        const menuPoemPage = document.querySelector('#menuPoemPage');
+        const textElement = document.querySelector('#text');
+
+        
+        if(JSON.stringify(poem) !== JSON.stringify(lastPoem) && poem != null ) recoverPoemData();
         
         textElement.addEventListener('keydown', event=> {
             if(!typeof event.target.innerText === 'string') return
@@ -102,36 +194,29 @@ export const NewPoemPage = ()=>{
             // console.log(event.key);
             resizeText(event.target, text)
 
-        })
-        menuPoemPage.addEventListener('mouseover', event=>{
-            document.querySelectorAll('.imgIcon').forEach(element=>{
-                element.style.left = '0'
-            })
-        })
-        menuPoemPage.addEventListener('mouseout', event=>{
-            document.querySelectorAll('.imgIcon').forEach(element=>{
-                element.style.left = '-50vw'
-            })
-        })
-    } )
+        });
 
-    // ----------- side functions -----------
+        if(colorPicker){
+            menuPoemPage.classList.remove('menuPoemPage');
+            menuPoemPage.classList.add('menuPoemPageHoverOff');
+        }
+        else{
+            menuPoemPage.classList.remove('menuPoemPageHoverOff');
+            menuPoemPage.classList.add('menuPoemPage');
+        }
 
-    const resizeTitle = (titleSize, fontTitleSize) => {
-        const textTittle = document.querySelector('#textTitle')
+        if(color !== lastColor) updateColor();
 
-        textTittle.style.height = `${titleSize}`
-        textTittle.style.fontSize = `${fontTitleSize}`
-    }    
+    })
+
     
     return(
-        <div className="newPoem" id='newPoemPage'>
-            <input id="textTitle" className='text1' type="text" placeholder='Escreva o título do seu poema' />
-            <div id="text" className='text2' onClick={handleStartWriting} contentEditable >
-                Escreva seu poema
+        <div className="newPoem" id='newPoemPage' ref={newPoemPageReference}>
+            <input id="textTitle" ref={refTittle} className='text1' type="text" placeholder='Tittle' />
+            <div id="text" ref={textAreaRef} className='text2' placeholder='Whrite your poem' contentEditable >
             </div>
 
-            <div id='menuPoemPage' className="menuPoemPage">
+            <div id='menuPoemPage' ref={menuPoemPage} className="menuPoemPage">
 
                 <div className='imgIcon' onClick={openColorPick}> 
                     <img src={menuPoemImage} alt="PoemColorPick" />
@@ -144,9 +229,14 @@ export const NewPoemPage = ()=>{
                     <img onClick={handleHomeClick} src={homeIcon} alt="SaveIcon" />
                 </div>
 
-                <input type="text" className='inputColor' placeholder='#FFF (coloque um valor em RGB para definir a cor)' />
-                <button className='btnColor' onClick={changeColorBtn} >ok</button>
             </div>
+
+            {colorPicker ? (
+                <div className='colorPicker'>
+                    <ColorPicker color={color} setColor={setColor} />
+                </div>
+            ) : null}
+
         </div>
     )
 }

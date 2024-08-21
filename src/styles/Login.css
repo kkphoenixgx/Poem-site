@@ -3,52 +3,113 @@
     height: 80vh;
     display: flex;
     align-items: center;
+    min-height: 358px;
 }
 
-.loginBox{
-    height: 60vh;
+.loginBox, .signUpBox{
+    height: 53vh;
+    min-height: 320px;
     width: 291px;
     min-width: 219px;
+    margin: 0 auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
-    justify-content: center;
-    background-color: dimgrey;
-    border-radius: 74px;
+    justify-content: space-evenly;
+
+    background: transparent;
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    border: 1px solid white;
 }
 
-.login img {
-    width: 116px;
+.login form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .login input {
     border: none;
-    width: 70%;
-    height: 8%;
+    width: 14rem;
+    height: 2rem;
     text-align: center;
     background-color: #e8f0ec;
     border-radius: 10px;
     font-weight: bold;
+    border-bottom: solid #509b83 4px;
+    margin-bottom: 1%;
 }
+.eye{
+    width: 0.9rem;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 12.5rem;
+    margin-bottom: 1.5%;
+}
+
+.email, .password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2%;
+}
+
 .login input:focus{
     outline: 0;
 }
+
 .login button{
-    width: 60%;
-    height: 8%;
+    width: 83%;
+    height: 4.75vh;
     border-radius: 20px;
-    background-color: #9cccbd;
+    background-color: transparent;
     cursor: pointer;
     transition: ease-in-out 0.5s;
+    margin-top: 6vh;
+    border-block-style: unset;
+    text-transform: capitalize;
+    color: white;
+}
+
+.invalidMessage{
+    color: #ff2323;;
+    font-weight: bold;
+}
+
+.signUp, .cancelSignUp{
+    cursor: pointer;
+    color: white;
 }
 
 body{
-    background-color: #c0d0d0;
+    background: url(../assets/img/fundo-login.jpeg) no-repeat;
+    background-position-y: 10vh !important;
+    background-position: center;
+    background-size: cover; 
 }
 
 /* ------------ Animations ------------ */
 
 .login button:hover{
-    background-color: #67caab;
+    background-color: #509b83;
 }
+
+/* ----------- Responsible design ----------- */
+
+/* Smartphones (portrait) */
+@media only screen and (max-device-width: 767px) {
+    
+} 
+/* iPads (portrait and landscape) */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    
+}
+/* Desktops and laptops */
+@media only screen and (min-width: 1025px) {
+    
+}
+

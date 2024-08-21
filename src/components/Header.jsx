@@ -1,21 +1,32 @@
 import '../styles/Header.css'
 import menuIcon from "../assets/img/menu-icon.png"
+import { useState } from 'react'
+
+import  {SidebarMenu}  from './sideBarMenu';
+
 
 export const Header = ( )=>{
+    let menuRoutes;
+    let [toogleMenuRoutes, setToogleMenuRoutes] = useState(false);
+    let styleTop = toogleMenuRoutes ? '-100vh' : "10vh";
+
+    const handleChildRef = (childRef) => {
+        menuRoutes = childRef.current;
+    };
 
     const handleMenu = ()=>{
-
-        let menuRoutes = document.querySelector('#menuRoutes')
         
-        if(menuRoutes.style.top === '-100vh') menuRoutes.style.top = '10vh'
-        else menuRoutes.style.top = '-100vh'
+        if(toogleMenuRoutes) setToogleMenuRoutes(false)
+        else if(!toogleMenuRoutes) setToogleMenuRoutes(true)
 
+        menuRoutes.style.top = styleTop
     }
 
     return (
         <header>
-            <h1>Notes App</h1>
-            <img onClick={handleMenu} src={menuIcon} alt="menuIcon" />
+            <SidebarMenu passRef={handleChildRef} />
+            <h1>Poem Maker</h1>
+            <img className='header-img' onClick={handleMenu} src={menuIcon} alt="menuIcon" />
         </header>
     )
 }
