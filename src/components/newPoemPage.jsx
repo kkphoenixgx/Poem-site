@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import menuPoemImage from '../assets/img/menuColor.png'
 import menuSaveIcon from '../assets/img/menuSaveIcon.png'
+import closeIcon from '../assets/img/closeImage.png'
 import homeIcon from '../assets/img/homeIcon.png'
 import Axios from "axios"
 import { ColorPicker } from './colorPickerSketch';
@@ -19,6 +20,8 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
     let [lastColor, setlastColor] = useState("#fff");
     
     let [lastPoem, setLastpoem] = useState({});
+
+    let site = "https://server-poem-site.onrender.com"
     
     // ----------- CLICK METHODS -----------
     const openColorPick = event => {
@@ -43,7 +46,7 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
             
             try {
 
-                Axios.post("http://localhost:3000/addPoem", poemObject)
+                Axios.post(`${site}/addPoem`, poemObject)
                     .then(response => {
                         console.log(response);
                         closePoemPage();
@@ -62,7 +65,7 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
         else{
             poemObject.key = poemKey;
 
-            Axios.post("http://localhost:3000/updatePoem", poemObject)
+            Axios.post(`${site}/updatePoem`, poemObject)
                 .then(response => {
                     console.log(response);
                     closePoemPage();
@@ -76,6 +79,10 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
     }
     const handleHomeClick = ()=>{
         closePoemPage();
+    }
+    const handleCloseClick = ()=>{
+        menuPoemPage.classList.remove('menuPoemPageHoverOff');
+        menuPoemPage.classList.add('menuPoemPage');
     }
 
     // ----------- MAIN METHODS -----------
@@ -196,6 +203,13 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
 
         });
 
+        menuPoemPage.addEventListener("click", () => {
+            menuPoemPage.classList.toggle('menuPoemPage');
+            menuPoemPage.classList.toggle('menuPoemPageHoverOff');
+            console.log("ue");
+        });
+        
+
         if(colorPicker){
             menuPoemPage.classList.remove('menuPoemPage');
             menuPoemPage.classList.add('menuPoemPageHoverOff');
@@ -227,6 +241,10 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
                 
                 <div className='imgIcon'>
                     <img onClick={handleHomeClick} src={homeIcon} alt="SaveIcon" />
+                </div>
+
+                <div className='imgIcon'>
+                    <img onClick={handleCloseClick} src={closeIcon} alt="SaveIcon" />
                 </div>
 
             </div>

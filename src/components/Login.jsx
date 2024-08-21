@@ -34,6 +34,8 @@ export const Login = () => {
     let eye = toogleEye ? closedEye : olhinho;
     let typePassord = toogleTypePassord ? "text" : "password";
 
+    let site = "https://server-poem-site.onrender.com"
+
 
     const handleClickEvent = event => {
         event.preventDefault();
@@ -47,7 +49,7 @@ export const Login = () => {
                     "password" : loginPassword.current.value
                 }
 
-                Axios.post("http://localhost:3000/login", object)
+                Axios.post(`${site}/login`, object)
                   .then(function (response) {
                    
                     localStorage.setItem('uid', response.data.data.uid);
@@ -80,7 +82,7 @@ export const Login = () => {
                         "poems" : []
                     }
 
-                    Axios.post("http://localhost:3000/signup", object)
+                    Axios.post(`${site}/signup`, object)
                       .then(function (response) {
                         navigate("/");
                       })

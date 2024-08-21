@@ -38,10 +38,9 @@
     color: gray;
 }
 
-.menuPoemPage,
+.menuPoemPageHover,
 .menuPoemPageHoverOff {
     height: 100vh;
-    left: 1vw;
     bottom: 10px;
     transition: ease-in-out 1s;
     display: flex;
@@ -53,7 +52,7 @@
     left: 0px;
 }
 
-.menuPoemPage:hover .imgIcon {
+.menuPoemPageHover .imgIcon {
     left: 0 !important;
 }
 

@@ -15,9 +15,11 @@ export const Home = ()=>{
 
     let [togglePoemsPage, setTogglePoemsPage] = useState(false)
     let [toggleNewPoemsPage, setToggleNewPoemsPage] = useState(false)
+    let [toogleRoundButton, setToogleRoundButton] = useState(false)
     let [poemsCollection, setPoemsCollection] = useState([]);
     let [poem, setPoem] = useState({});
     let [currentPoemKey, setCurrentPoemKey] = useState("");
+    let site = "https://server-poem-site.onrender.com"
 
     const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export const Home = ()=>{
     const handleDeleteButton = event=>{
         const poemId = event.target.parentNode.parentNode.dataset.id
 
-        Axios.delete(`http://localhost:3000/deletePoem/${localStorage.getItem("uid")}/${poemId}`)
+        Axios.delete(`${site}/deletePoem/${localStorage.getItem("uid")}/${poemId}`)
           .then( response => {
             console.log(response);
             getPoems();
@@ -53,8 +55,9 @@ export const Home = ()=>{
             if(localStorage.getItem("uid") == null){
                 console.error("ERROR: invalid UID");
                 setTogglePoemsPage(false);
+                setToogleRoundButton(false);
             }else{
-                Axios.get(`http://localhost:3000/poems/${localStorage.getItem("uid")}`)
+                Axios.get(`${site}/poems/${localStorage.getItem("uid")}`)
                 .then(response => {
 
                     
@@ -65,11 +68,12 @@ export const Home = ()=>{
                         responses.push(object)
                     });
                     setPoemsCollection(responses)
-                    
                     setTogglePoemsPage(true)
+                    setToogleRoundButton(true)
                 })
                 .catch( error => {
                     setTogglePoemsPage(false)
+                    setToogleRoundButton(false)
                     console.error(error);
                 })
             }
@@ -77,6 +81,7 @@ export const Home = ()=>{
 
         } catch (error) {
             setTogglePoemsPage(false)
+            setToogleRoundButton(false)
             console.error(error)
         }
     }
@@ -138,12 +143,15 @@ export const Home = ()=>{
                         <p onClick={ ()=>{ navigate("/login") }}>Login for use</p>
                     </div>
                 }
-                <img 
-                    onClick={handleButtonClick} 
-                    src={ roundAddButtonImage } 
-                    alt="roundButton" 
-                    className='addPoemIcon'
-                />
+                { toogleRoundButton?
+                    <img 
+                        onClick={handleButtonClick} 
+                        src={ roundAddButtonImage } 
+                        alt="add poem icon" 
+                        className='addPoemIcon'
+                    />
+                    : <></>
+                }
 
             </div>
         </>

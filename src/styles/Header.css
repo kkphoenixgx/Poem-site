@@ -14,6 +14,15 @@ header h1{
     color: white;
     margin-left: 2%;
 }
+header .myLogo{
+    width: 4rem;        
+}
+header .siteLogo{
+    display: flex;
+    width: 80vw;
+    justify-content: flex-start;
+    align-items: center;
+}
 header .header-img {
     /* margin-right: 4%; */
     height: 31px;
