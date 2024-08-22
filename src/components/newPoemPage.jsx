@@ -5,7 +5,7 @@ import menuPoemImage from '../assets/img/menuColor.png'
 import menuSaveIcon from '../assets/img/menuSaveIcon.png'
 import closeIcon from '../assets/img/closeImage.png'
 import homeIcon from '../assets/img/homeIcon.png'
-import menuHamb from '../assets/img/sideMenuNewPoemPage.jpg'
+import menuHamb from '../assets/img/menuNewPoemPage.png'
 import Axios from "axios"
 import { ColorPicker } from './colorPickerSketch';
 

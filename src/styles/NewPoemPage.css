@@ -5,9 +5,8 @@
     height: 100vh;
     max-height: 100vh;
     position: absolute;
-    top: 7px;
+    top: 0px;
     z-index: 5;
-    transition: ease-in-out 1s;
 }
 .text1, .text2{
     display: table-cell;
