@@ -56,6 +56,13 @@
     left: 0 !important;
 }
 
+.menuButton{
+    width: 3.5rem;
+    position: absolute;
+    top: 0.7vh; 
+    width: 3.5rem;
+}   
+
 .imgIcon {
     background-color: black;
     width: 60px;

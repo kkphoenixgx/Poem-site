@@ -5,6 +5,7 @@ import menuPoemImage from '../assets/img/menuColor.png'
 import menuSaveIcon from '../assets/img/menuSaveIcon.png'
 import closeIcon from '../assets/img/closeImage.png'
 import homeIcon from '../assets/img/homeIcon.png'
+import menuHamb from '../assets/img/sideMenuNewPoemPage.jpg'
 import Axios from "axios"
 import { ColorPicker } from './colorPickerSketch';
 
@@ -16,6 +17,7 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
     let newPoemPageReference = useRef();
 
     let [colorPicker, setColorPicker] = useState(false);
+    let [menuButton, setMenuButton] = useState(true);
     let [color, setColor] = useState("#fff");
     let [lastColor, setlastColor] = useState("#fff");
     
@@ -81,8 +83,10 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
         closePoemPage();
     }
     const handleCloseClick = ()=>{
-        menuPoemPage.classList.remove('menuPoemPageHoverOff');
-        menuPoemPage.classList.add('menuPoemPage');
+        toogleSideMenu();
+    }
+    const handleOpenMenu = ()=>{
+        toogleSideMenu();
     }
 
     // ----------- MAIN METHODS -----------
@@ -131,6 +135,13 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
     }
 
     // ----------- SIDE METHODS -----------
+    const toogleSideMenu = ()=>{
+
+        setMenuButton(!menuButton);
+        menuPoemPage.current.classList.toggle('menuPoemPage');
+        menuPoemPage.current.classList.toggle('menuPoemPageHoverOff');
+
+    }
     const hexToRgb = (hex) => {
         // Remove the leading # if present
         hex = hex.replace(/^#/, '');
@@ -182,7 +193,6 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
 
     
     useEffect( ()=>{
-        const menuPoemPage = document.querySelector('#menuPoemPage');
         const textElement = document.querySelector('#text');
 
         
@@ -203,22 +213,6 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
 
         });
 
-        menuPoemPage.addEventListener("click", () => {
-            menuPoemPage.classList.toggle('menuPoemPage');
-            menuPoemPage.classList.toggle('menuPoemPageHoverOff');
-            console.log("ue");
-        });
-        
-
-        if(colorPicker){
-            menuPoemPage.classList.remove('menuPoemPage');
-            menuPoemPage.classList.add('menuPoemPageHoverOff');
-        }
-        else{
-            menuPoemPage.classList.remove('menuPoemPageHoverOff');
-            menuPoemPage.classList.add('menuPoemPage');
-        }
-
         if(color !== lastColor) updateColor();
 
     })
@@ -228,7 +222,7 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
         <div className="newPoem" id='newPoemPage' ref={newPoemPageReference}>
             <input id="textTitle" ref={refTittle} className='text1' type="text" placeholder='Tittle' />
             <div id="text" ref={textAreaRef} className='text2' placeholder='Whrite your poem' contentEditable >
-            </div>
+        </div>
 
             <div id='menuPoemPage' ref={menuPoemPage} className="menuPoemPage">
 
@@ -246,8 +240,11 @@ export const NewPoemPage = ( { closePoemPage, poem, poemKey } )=>{
                 <div className='imgIcon'>
                     <img onClick={handleCloseClick} src={closeIcon} alt="SaveIcon" />
                 </div>
-
             </div>
+            {   menuButton?
+                    <img src={menuHamb} alt="menu button" className='menuButton' onClick={handleOpenMenu} />
+                : <></>
+            }
 
             {colorPicker ? (
                 <div className='colorPicker'>
