@@ -40,7 +40,7 @@
 .menuPoemPageHover,
 .menuPoemPageHoverOff {
     height: 100vh;
-    bottom: 1vh;
+    bottom: 8vh;
     transition: ease-in-out 1s;
     display: flex;
     flex-direction: column-reverse;
